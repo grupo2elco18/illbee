@@ -24,6 +24,10 @@ class App(Tk.Frame):
 		self.hi_there.grid(row=0, column=0)
 		self.columnconfigure(1, weight=1)
 
+		self.canvas = Tk.Canvas(self, bg="blue");
+		self.canvas.grid(row=0, column=2, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
+		self.columnconfigure(2, weight=1)
+
 	def say_hi(self):
 		print("Hello, World!")
 
@@ -33,6 +37,7 @@ class App(Tk.Frame):
 
 def main():
 	root = Tk.Tk()
+	root.title("ILLUD Test") # TODO those thing in config file
 	root.rowconfigure(0, weight=1)
 	root.columnconfigure(0, weight=1)
 	app = App(root)
