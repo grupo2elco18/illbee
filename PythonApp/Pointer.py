@@ -10,12 +10,23 @@ class Pointer(object):
 		self.offX = 0
 		self.offY = 0
 		self.moved = False
+		self.onClickCB = None
+
+	def setClickCb(self, cb):
+		self.onClickCB = cb
 
 	def onClick(self, event=None):
 		if(self.canvas == None):
 			return
 
-	def update(self, pos):
+		if(self.onClickCB == None):
+			print("clicked at", self.posX, self.posY)
+			return
+
+		self.onClickCB(event, self)
+
+
+	def _update(self, pos):
 		self.posX = pos[0]
 		self.posY = pos[1]
 		self.moved = True
