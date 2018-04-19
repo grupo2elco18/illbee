@@ -1,14 +1,23 @@
 #!/usr/bin/python3
+#!/# -*- coding: utf-8 -*-
 import tkinter as Tk
 
 
 class PointCanvas(Tk.Canvas):
 	def __init__(self, **kwargs):
 		super(PointCanvas, self).__init__(**kwargs)
+		self.pointers = []
+		self._update()
 
-		self["bg"] = "lightblue"
+	def addPointer(self, pointer):
+		self.pointers.append(pointer)
+		pointer.draw(self)
 
+	def _update(self):
+		for p in self.pointers:
+			p.move()
 
+		self.after(20, self._update)
 
 def main():
 	import _thread as thread

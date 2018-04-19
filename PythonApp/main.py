@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+# -*- coding: utf-8 -*-
 import tkinter as Tk
 
 class App(Tk.Frame):
