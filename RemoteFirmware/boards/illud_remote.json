@@ -1,0 +1,45 @@
+{
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_UNO",
+    "f_cpu": "16000000L",
+    "hwids": [
+      [
+        "0x2341",
+        "0x0043"
+      ],
+      [
+        "0x2341",
+        "0x0001"
+      ],
+      [
+        "0x2341",
+        "0x0243"
+      ],
+      [
+        "0x2A03",
+        "0x0043"
+      ]
+    ],
+    "mcu": "atmega328p",
+    "variant": "standard"
+  },
+  "frameworks": [
+    "arduino"
+  ],
+  "fuses": {
+    "efuse": "0x05",
+    "hfuse": "0xDE",
+    "lfuse": "0xFF",
+    "lock": "0x3F"
+  },
+  "name": "Illud Remote",
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 32256,
+    "protocol": "usbtiny",
+    "require_upload_port": false
+  },
+  "url": "https://none",
+  "vendor": "Illud"
+}
