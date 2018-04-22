@@ -1,17 +1,27 @@
 #include <Arduino.h>
 #include <xbee.h>
+#include <colorLED.h>
+#include <stdio.h>
 
 extern void Error_Handler();
 
 void setup() {
-	pinMode(9, OUTPUT); //Green
-	pinMode(10, OUTPUT); //Blue
-	pinMode(11, OUTPUT); //Red
+	colorLED_begin();
 	xbee_begin();
-	digitalWrite(11, HIGH);
-	delay(500);
-	digitalWrite(11, LOW);
-	delay(1000);
+	for(int i = 0; i < 256; ++i){
+		colorLED_setByte(255 - i, i, 0);
+		delay(10);
+	}
+	for(int i = 0; i < 256; ++i){
+		colorLED_setByte(0, 255 - i, i);
+		delay(10);
+	}
+	for(int i = 0; i < 256; ++i){
+		colorLED_setByte(i, 0, 255 - i);
+		delay(10);
+	}
+
+	colorLED_setByte(255, 255, 255);
 }
 
 void loop() {
