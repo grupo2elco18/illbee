@@ -7,40 +7,28 @@ extern void Error_Handler();
 
 void setup() {
 	colorLED_begin();
-	xbee_begin();
-	for(int i = 0; i < 256; ++i){
-		colorLED_setByte(255 - i, i, 0);
-		delay(10);
-	}
-	for(int i = 0; i < 256; ++i){
-		colorLED_setByte(0, 255 - i, i);
-		delay(10);
-	}
-	for(int i = 0; i < 256; ++i){
-		colorLED_setByte(i, 0, 255 - i);
-		delay(10);
+	colorLED_set(LED_BLUE);
+
+	if(xbee_init() != XBEE_SUCCESS){
+		Error_Handler();
 	}
 
-	colorLED_setByte(255, 255, 255);
+	colorLED_set(LED_GREEN);
 }
 
 void loop() {
-
-	int rc = xbee_send("Hola, Mundo!\r");
-	if(rc != 13){
+	if(xbee_send("Hola, Mundo!") <= 0){
 		Error_Handler();
 	}
 	delay(1000);
 }
 
 void Error_Handler(){
-	digitalWrite(9, LOW);
-	digitalWrite(10, LOW);
-	digitalWrite(11, LOW);
+	colorLED_off();
 	while(1){
-		digitalWrite(11, HIGH);
+		colorLED_set(LED_RED);
 		delay(500);
-		digitalWrite(11, LOW);
+		colorLED_off();
 		delay(500);
 	}
 }

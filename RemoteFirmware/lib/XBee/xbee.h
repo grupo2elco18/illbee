@@ -3,6 +3,7 @@
 
 #include "stdlib.h"
 #include "stdint.h"
+#include "xbeeConf.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,12 +16,12 @@ extern "C" {
 
 #define XBEE_TO_TIME 5000
 
-void xbee_begin();
+int xbee_init();
 int xbee_sendAtForResponse(const char* at, char* resp, size_t resp_len);
 int xbee_sendAtForConfig(const char* at, const char* arg);
 int xbee_sendAtForOk(const char* at);
 int xbee_send(const char* str);
-int xbee_send_byte(uint8_t c);
+int xbee_send_byte(uint8_t* c, size_t len);
 
 
 

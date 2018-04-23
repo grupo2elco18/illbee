@@ -4,6 +4,7 @@
 
 static int conf = 0;
 static const char* str_OK = "OK";
+static const char* sn;
 
 static int startConf();
 static int endConf();
@@ -19,8 +20,6 @@ static int startConf(){
 	}
 	return XBEE_ERROR;
 }
-
-
 
 static int endConf(){
 	int status = xbee_sendAtForOk("CN");
@@ -71,8 +70,12 @@ static int checkOK(const char* recv){
 	}
 }
 
-void xbee_begin(){
+int xbee_init(){
 	Serial.begin(9600);
+	int status = xbee_getSN();
+	if(status != XBEE_SUCCESS) return status;
+	sn = xbee_getSN_pchar();
+	return XBEE_SUCCESS;
 }
 
 int xbee_sendAtForResponse(const char* at, char* resp, size_t resp_len){
@@ -105,14 +108,15 @@ int xbee_send(const char* str){
 		int status = endConf();
 		if(status != XBEE_SUCCESS) return status;
 	}
-	return Serial.write(str);
+	int len = 0;
+	len += Serial.write(sn);
+	len += Serial.write(" {");
+	len += Serial.write(str);
+	len += Serial.write("}\r");
+	return len;
 
 }
 
-int xbee_send_byte(uint8_t c){
-	if(conf) {
-		int status = endConf();
-		if(status != XBEE_SUCCESS) return status;
-	}
-	return Serial.write(c);
+int xbee_send_byte(uint8_t* c, size_t len){
+	return XBEE_ERROR; // TODO
 }
