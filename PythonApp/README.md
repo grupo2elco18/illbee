@@ -1,6 +1,6 @@
 # _I'llBee_ Python app
 
-[Semantic Versioning] (https://semver.org/)
+[Semantic Versioning](https://semver.org/)
 
 ## Dependencies
 
