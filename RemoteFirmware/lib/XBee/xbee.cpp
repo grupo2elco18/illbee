@@ -78,6 +78,17 @@ int xbee_init(){
 	return XBEE_SUCCESS;
 }
 
+int xbee_wait_connect(uint16_t timeout){
+	// TODO return error info
+	unsigned long end = millis() + timeout;
+	int status;
+	while(millis() < end){
+		status = xbee_getAssociation();
+		if(status == 0) return XBEE_ASSOCIATION_SUCCESS;
+	}
+	return XBEE_ASSOCIATION_NO_SUCCESS;
+}
+
 int xbee_sendAtForResponse(const char* at, char* resp, size_t resp_len){
 	if(!conf) {
 		int status = startConf();

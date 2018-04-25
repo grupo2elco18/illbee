@@ -1,6 +1,7 @@
 #include "xbeeConf.h"
 #include "xbee.h"
 #include <string.h>
+#include <stdlib.h>
 
 static char* strcpy_size(char* dest, const char* src, size_t len);
 
@@ -27,8 +28,11 @@ int xbee_getSN(){
 }
 
 int xbee_getAssociation(){
-	return 0;
-} //AI
+	char buffer[10];
+	int status = xbee_sendAtForResponse("AI", buffer, sizeof(buffer));
+	if(status <= 0) return status;
+	return atoi(buffer);
+}
 
 int xbee_getPANID(char* sdc, uint8_t* sdb){
 	return XBEE_ERROR;
@@ -39,7 +43,7 @@ int xbee_setPANID(const char* sdc){
 }
 
 int xbee_isCoordinator(){
-	return 0;
+	return XBEE_ERROR;
 }
 
 int xbee_setCoordinator(int c){

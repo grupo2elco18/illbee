@@ -17,6 +17,7 @@ extern "C" {
 #define XBEE_TO_TIME 5000
 
 int xbee_init();
+int xbee_wait_connect(uint16_t timeout);
 int xbee_sendAtForResponse(const char* at, char* resp, size_t resp_len);
 int xbee_sendAtForConfig(const char* at, const char* arg);
 int xbee_sendAtForOk(const char* at);

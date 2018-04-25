@@ -13,6 +13,11 @@ void setup() {
 		Error_Handler();
 	}
 
+	colorLED_set(LED_ORANGE);
+	if(xbee_wait_connect(2000) != XBEE_ASSOCIATION_SUCCESS){
+		Error_Handler();
+	}
+
 	colorLED_set(LED_GREEN);
 }
 
