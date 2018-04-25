@@ -2,12 +2,16 @@
 #include <xbee.h>
 #include <colorLED.h>
 #include <stdio.h>
+#include <irCam.h>
+#include <stdlib.h>
 
 extern void Error_Handler();
 
 void setup() {
 	colorLED_begin();
 	colorLED_set(LED_BLUE);
+
+	irCam_init();
 
 	if(xbee_init() != XBEE_SUCCESS){
 		Error_Handler();
@@ -22,7 +26,16 @@ void setup() {
 }
 
 void loop() {
-	if(xbee_send("Hola, Mundo!") <= 0){
+	uint16_t points[8];
+	irCam_read(points);
+
+	char buffer[50];
+	sprintf(buffer, "%d, %d, %d, %d, %d, %d, %d, %d",
+		points[0], points[1], points[2], points[3],
+		points[4], points[5], points[6], points[7]
+	);
+
+	if(xbee_send(buffer) <= 0){
 		Error_Handler();
 	}
 	delay(1000);
