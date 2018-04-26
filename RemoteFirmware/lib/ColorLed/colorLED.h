@@ -10,7 +10,7 @@
 #define LED_CYAN     0x00FFFF
 #define LED_MAGENTA  0xFF00FF
 #define LED_WHITE    0xFFFFFF
-#define LED_ORANGE   0xFF9400
+#define LED_ORANGE   0xDF9400
 
 #define LED_RED_PIN 11
 #define LED_GREEN_PIN 9

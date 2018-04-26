@@ -17,11 +17,13 @@ int xbee_getAssociation(); //AI
 
 int xbee_getPANID(char* sdc, uint8_t* sdb);
 int xbee_setPANID(const char* sdc);
+int xbee_getOpPAN(char* sdc, uint8_t* sdb);
 
 int xbee_isCoordinator();
 int xbee_setCoordinator(int c);
 
 int xbee_wr();
+int xbee_ac();
 
 #ifdef __cplusplus
 }

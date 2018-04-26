@@ -8,6 +8,7 @@
 extern void Error_Handler();
 
 void setup() {
+
 	colorLED_begin();
 	colorLED_set(LED_BLUE);
 
@@ -17,8 +18,10 @@ void setup() {
 		Error_Handler();
 	}
 
+
 	colorLED_set(LED_ORANGE);
-	if(xbee_wait_connect(2000) != XBEE_ASSOCIATION_SUCCESS){
+	// TODO Configure xbee here
+	if(xbee_wait_connect(30000) != XBEE_ASSOCIATION_SUCCESS){
 		Error_Handler();
 	}
 
@@ -26,6 +29,7 @@ void setup() {
 }
 
 void loop() {
+
 	uint16_t points[8];
 	irCam_read(points);
 
@@ -35,16 +39,18 @@ void loop() {
 		points[4], points[5], points[6], points[7]
 	);
 
+	colorLED_set(LED_CYAN);
 	if(xbee_send(buffer) <= 0){
 		Error_Handler();
 	}
-	delay(1000);
+	colorLED_set(LED_GREEN);
 }
 
 void Error_Handler(){
 	colorLED_off();
 	while(1){
 		colorLED_set(LED_RED);
+		xbee_send("Error");
 		delay(500);
 		colorLED_off();
 		delay(500);

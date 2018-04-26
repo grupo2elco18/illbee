@@ -70,8 +70,21 @@ static int checkOK(const char* recv){
 	}
 }
 
+/*
+static int checkPAN(){
+	char id_pan[17];
+	char op_pan[17];
+	int status = xbee_getPANID(id_pan, NULL);
+	if(status != XBEE_SUCCESS) return XBEE_ASSOCIATION_NO_SUCCESS;
+	status = xbee_getOpPAN(op_pan, NULL);
+	if(status != XBEE_SUCCESS) return XBEE_ASSOCIATION_NO_SUCCESS;
+	if(strcmp(id_pan, op_pan) == 0) return XBEE_ASSOCIATION_SUCCESS;
+	return XBEE_ASSOCIATION_NO_SUCCESS;
+}
+*/
+
 int xbee_init(){
-	Serial.begin(9600);
+	Serial.begin(9600); // TODO increase baud rate
 	int status = xbee_getSN();
 	if(status != XBEE_SUCCESS) return status;
 	sn = xbee_getSN_pchar();
@@ -80,6 +93,7 @@ int xbee_init(){
 
 int xbee_wait_connect(uint16_t timeout){
 	// TODO return error info
+	// TODO sometimes at ai returns 0 even if no pan exist
 	unsigned long end = millis() + timeout;
 	int status;
 	while(millis() < end){

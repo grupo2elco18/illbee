@@ -31,27 +31,23 @@ int xbee_getAssociation(){
 	char buffer[10];
 	int status = xbee_sendAtForResponse("AI", buffer, sizeof(buffer));
 	if(status <= 0) return status;
-	return atoi(buffer);
+	return (int) strtoul(buffer, NULL, 16);
 }
 
 int xbee_getPANID(char* sdc, uint8_t* sdb){
-	return XBEE_ERROR;
+	char buffer[17];
+	int status = xbee_sendAtForResponse("ID", buffer, sizeof(buffer));
+	if(status <= 0) return status;
+	strcpy_size(sdc, buffer, 17);
+	return XBEE_SUCCESS;
 }
 
-int xbee_setPANID(const char* sdc){
-	return XBEE_ERROR;
-}
-
-int xbee_isCoordinator(){
-	return XBEE_ERROR;
-}
-
-int xbee_setCoordinator(int c){
-	return XBEE_ERROR;
-}
-
-int xbee_wr(){
-	return XBEE_ERROR;
+int xbee_getOpPAN(char* sdc, uint8_t* sdb){
+	char buffer[17];
+	int status = xbee_sendAtForResponse("OP", buffer, sizeof(buffer));
+	if(status <= 0) return status;
+	strcpy_size(sdc, buffer, 17);
+	return XBEE_SUCCESS;
 }
 
 static char* strcpy_size(char* dest, const char* src, size_t len){
@@ -62,4 +58,17 @@ static char* strcpy_size(char* dest, const char* src, size_t len){
 	return dest;
 }
 
+int xbee_setPANID(const char* sdc){
+	return xbee_sendAtForConfig("ID", sdc);
+}
+
+int xbee_wr(){
+	return xbee_sendAtForOk("WR");
+}
+
+int xbee_ac(){
+	return xbee_sendAtForOk("AC");
+}
+
 // TODO complete this driver
+// TODO repeated code with get ids
