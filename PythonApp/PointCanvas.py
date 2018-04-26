@@ -27,13 +27,17 @@ def main():
 	root = Tk.Tk()
 	root.title("PointCanvas Test")
 	canvas = PointCanvas(master=root, width=400, height=400, bg='lightblue')
-	canvas.pack()
+	canvas.grid(row=0, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
+	root.rowconfigure(0, weight=1)
+	root.columnconfigure(0, weight=1)
 
 	pointer = CursorPointer.CursorPointer()
 	canvas.addPointer(pointer)
 
 	def motion(event):
-		pos = event.x, event.y
+		sizeX = canvas.winfo_width()
+		sizeY = canvas.winfo_height()
+		pos = event.x/sizeX, event.y/sizeY
 		pointer.update(pos)
 
 	canvas.bind('<Motion>', motion)

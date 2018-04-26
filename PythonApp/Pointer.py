@@ -27,8 +27,10 @@ class Pointer(object):
 
 
 	def _update(self, pos):
-		self.posX = pos[0]
-		self.posY = pos[1]
+		sizeX = self.canvas.winfo_width()
+		sizeY = self.canvas.winfo_height()
+		self.posX = pos[0]*sizeX
+		self.posY = pos[1]*sizeY
 		self.moved = True
 
 	def move(self):
