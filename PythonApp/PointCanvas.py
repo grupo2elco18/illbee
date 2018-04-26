@@ -26,7 +26,7 @@ def main():
 
 	root = Tk.Tk()
 	root.title("PointCanvas Test")
-	canvas = PointCanvas(master=root, width=400, height=400, bg='lightblue')
+	canvas = PointCanvas(master=root, bg='lightblue')
 	canvas.grid(row=0, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 	root.rowconfigure(0, weight=1)
 	root.columnconfigure(0, weight=1)
