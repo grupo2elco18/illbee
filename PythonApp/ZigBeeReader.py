@@ -1,6 +1,7 @@
 import serial
 import serial.threaded
 import _thread as thread
+import time
 
 class ZigBeeReader(serial.threaded.LineReader):
 	def __init__(self, handler):
@@ -14,6 +15,8 @@ class ZigBeeReader(serial.threaded.LineReader):
 			stopbits=serial.STOPBITS_ONE,
 			timeout=1
 		)
+		self.p = 0
+		self.q = 0
 
 	def start(self):
 		self.on = True
@@ -27,10 +30,11 @@ class ZigBeeReader(serial.threaded.LineReader):
 		with serial.threaded.ReaderThread(self.ser, ReadLines) as protocol:
 			protocol.setCB(self._newline)
 			while self.on:
-				pass
+				time.sleep(1)
+				print(self.p, self.q)
 
 	def _newline(self, line):
-		print(line)
+		self.p = self.p + 1
 		serial = self._serial(line)
 		if serial is None:
 			return
@@ -41,6 +45,7 @@ class ZigBeeReader(serial.threaded.LineReader):
 			return
 		points = self._points(numbers)#
 
+		self.q = self.q + 1
 		self.handler.data(serial, points)
 
 	def _serial(self, line):

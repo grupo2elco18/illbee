@@ -23,6 +23,7 @@ int xbee_sendAtForConfig(const char* at, const char* arg);
 int xbee_sendAtForOk(const char* at);
 int xbee_send(const char* str);
 int xbee_send_byte(uint8_t* c, size_t len);
+int xbee_changeBR(); // TODO select baudrate
 
 
 

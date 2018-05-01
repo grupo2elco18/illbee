@@ -145,3 +145,12 @@ int xbee_send(const char* str){
 int xbee_send_byte(uint8_t* c, size_t len){
 	return XBEE_ERROR; // TODO
 }
+
+int xbee_changeBR(){
+	int status = xbee_sendAtForConfig("BD", "7");
+	if(status != XBEE_SUCCESS) return status;
+	status = xbee_ac();
+	if(status != XBEE_SUCCESS) return status;
+	Serial.begin(115200);
+	return XBEE_SUCCESS;
+}

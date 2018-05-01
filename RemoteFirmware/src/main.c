@@ -18,6 +18,9 @@ void setup() {
 		Error_Handler();
 	}
 
+	if(xbee_changeBR() != XBEE_SUCCESS){
+		Error_Handler();
+	}
 
 	colorLED_set(LED_ORANGE);
 	// TODO Configure xbee here
@@ -44,7 +47,7 @@ void loop() {
 		Error_Handler();
 	}
 	colorLED_set(LED_GREEN);
-	//delay(20);
+	delay(20);
 }
 
 void Error_Handler(){
