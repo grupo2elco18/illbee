@@ -10,25 +10,21 @@ class IRPointer(Pointer.Pointer):
 		self.offY = 5
 
 	def update(self, irPoints):
-		print(irPoints)
-		mx = (irPoints[0][0]+irPoints[1][0])/2
-		my = (irPoints[0][1]+irPoints[1][1])/2
+		mx = (irPoints[0].x+irPoints[1].x)/2
+		my = (irPoints[0].y+irPoints[1].y)/2
 		posX = mx
 		posY = 1024 - my
-		self._update([posX, posY])
+		self._update([posX/1024, posY/1024])
 
 	def _draw(self):
 		return self.canvas.create_oval([0, 0], [10, 10], fill='orange')
-
-def read_serial(pointer, zb):
-	while True:
-		pointer.update(zb.read_points())
 
 
 def main():
 	import tkinter as Tk
 	import PointCanvas
 	import ZigBeeReader
+	import ZigBeeHandler
 	import _thread as thread
 
 
@@ -37,14 +33,15 @@ def main():
 	canvas = PointCanvas.PointCanvas(master=root, width=1024, height=1024, bg='lightblue')
 	canvas.pack()
 
-	pointer = IRPointer(None, None)
-	canvas.addPointer(pointer)
+	handler = ZigBeeHandler.ZigBeeHandler(canvas)
 
-	zb = ZigBeeReader.ZigBeeReader()
+	reader = ZigBeeReader.ZigBeeReader(handler)
 
-	thread.start_new_thread( read_serial, (pointer, zb, ) )
+	reader.start()
 
 	root.mainloop()
+
+	reader.stop()
 
 
 if __name__ == "__main__":

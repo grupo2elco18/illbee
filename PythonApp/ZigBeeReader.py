@@ -69,7 +69,11 @@ class ZigBeeReader(serial.threaded.LineReader):
 		numbers_list = numbers_str.split(',')
 		numbers = []
 		for n in numbers_list:
-			numbers.append(int(n))
+			try:
+				numbers.append(int(n))
+			except ValueError as e:
+				print(e)
+				return None
 
 		return numbers
 

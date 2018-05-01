@@ -11,6 +11,7 @@ class Pointer(object):
 		self.offY = 0
 		self.moved = False
 		self.onClickCB = None
+		self.id = None
 
 	def setClickCb(self, cb):
 		self.onClickCB = cb
