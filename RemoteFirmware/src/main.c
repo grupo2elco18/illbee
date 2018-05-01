@@ -44,6 +44,7 @@ void loop() {
 		Error_Handler();
 	}
 	colorLED_set(LED_GREEN);
+	//delay(20);
 }
 
 void Error_Handler(){

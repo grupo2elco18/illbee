@@ -6,6 +6,7 @@
 static void write2bytes(uint8_t d1, uint8_t d2);
 
 void irCam_init(){
+	Wire.begin();
 	write2bytes(0x30,0x01); delay(10);
 	write2bytes(0x30,0x08); delay(10);
 	write2bytes(0x06,0x90); delay(10);

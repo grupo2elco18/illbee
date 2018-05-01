@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #define IR_ADDR 0xB0
-#define IR_SLAVE IR_ADDR >> 1
+#define IR_SLAVE (IR_ADDR >> 1)
 
 #ifdef __cplusplus
 extern "C" {

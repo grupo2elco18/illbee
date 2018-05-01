@@ -30,6 +30,7 @@ class ZigBeeReader(serial.threaded.LineReader):
 				pass
 
 	def _newline(self, line):
+		print(line)
 		serial = self._serial(line)
 		if serial is None:
 			return

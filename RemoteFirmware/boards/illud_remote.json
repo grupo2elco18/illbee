@@ -2,7 +2,7 @@
   "build": {
     "core": "arduino",
     "extra_flags": "-DARDUINO_AVR_UNO",
-    "f_cpu": "2000000L",
+    "f_cpu": "16000000L",
     "hwids": [
       [
         "0x2341",
@@ -30,7 +30,7 @@
   "fuses": {
     "efuse": "0xFD",
     "hfuse": "0xDF",
-    "lfuse": "0x7F",
+    "lfuse": "0xFF",
     "lock": "0x3F"
   },
   "name": "Illud Remote",
