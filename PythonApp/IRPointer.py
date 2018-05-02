@@ -11,32 +11,29 @@ class IRPointer(Pointer.Pointer):
 		self.offY = 5
 
 	def update(self, irPoints):
-		"""
-		mx = (irPoints[0].x+irPoints[1].x)/2
-		my = (irPoints[0].y+irPoints[1].y)/2
-		posX = mx
-		posY = 1024 - my
-		self._update([posX/1024, posY/1024])
-		"""
 		p1 = irPoints[0]
 		p2 = irPoints[1]
 		if p1 is None or p2 is None:
 			return
 
-
-		mp = p1.midPoint(p2); # medium points
+		mp = p1.midPoint(p2);
 		dist = p1.diff(p2);
 
-		fp = Point([0.5, 1]) # focus point (screen cursor)
+		# Point where the remote is pointing
+		fp = Point([0.5, 1])
 
+		# Screen size
 		screen = Point([0.5-abs(dist.x/2), 1-abs(dist.y/2)])
 
-		sp = Point([mp.x-screen.x, mp.y]) # edge screen
+		# Lower left screen corner in remote perspective
+		sp = Point([mp.x-screen.x, mp.y])
 
-		up = fp.diff(sp) # cursor
+		# Where the cursor should be
+		up = fp.diff(sp)
+		up.x = up.x/(screen.x*2) # Normalize screen y dimension
 
-		up.x = up.x/(screen.x*2)
-
+		# TODO allow rotation: extract angle from ir points and
+		# rotate screen corner from mp
 		self._update(up.getPos())
 
 	def _draw(self):
