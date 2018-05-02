@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test>
+	<name>Geografía española</name>
+	<description>Test sobre geografía política de España</description>
+
+	<question>
+		<title>¿Dónde está Madrid?</title>
+		<type>map</type>
+		<bg>tests/res/spain.png</bg>
+		<answer>tests/res/spain_madrid.png</answer>
+	</question>
+	<question>
+		<title>¿Cuál es la provincia de Toledo?</title>
+		<type>map</type>
+		<bg>tests/res/spain.png</bg>
+		<answer>tests/res/spain_toledo.png</answer>
+	</question>
+	<question>
+		<title>¿Dónde se encuentra Galicia?</title>
+		<type>map</type>
+		<bg>tests/res/spain.png</bg>
+		<answer>tests/res/spain_galicia.png</answer>
+	</question>
+</test>

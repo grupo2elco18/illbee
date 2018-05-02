@@ -1,4 +1,7 @@
 import IRPointer
+import xml.etree.ElementTree as ET
+
+remotes_file = "res/remotes.xml" # TODO config
 
 class ZigBeeHandler(object):
 
@@ -6,6 +9,8 @@ class ZigBeeHandler(object):
 		super(ZigBeeHandler, self).__init__()
 		self.canvas = canvas
 		self.remotes = {}
+		xml = ET.parse(remotes_file).getroot()
+		self.xml_remotes = xml.findall("remote")
 
 
 	def data(self, serial, points):
@@ -22,6 +27,40 @@ class ZigBeeHandler(object):
 
 	def new_remote(self, serial):
 		print("New remote", serial)
-		pointer = IRPointer.IRPointer(serial, None)
-		self.canvas.addPointer(pointer)
-		return pointer
+
+		for r in self.xml_remotes:
+			if 	r.attrib["serial"] == serial:
+				name = r.find("name").text
+				color = r.find("color").text
+				pointer = IRPointer.IRPointer(serial, color)
+				self.canvas.addPointer(pointer)
+				return pointer
+
+		print("Unknown remote")
+		return None
+
+def main():
+	tree = ET.parse(remotes_file)
+
+	root = tree.getroot()
+	print(root.attrib)
+	print(root.tag)
+	print(root.findall('remote'))
+
+	for child in root:
+		print(child.tag)
+		print(child.attrib)
+		for c in child:
+			print(c.tag)
+			print(c.text)
+
+		print(child.find("name").text)
+
+
+
+
+
+
+
+if __name__ == '__main__':
+	main()

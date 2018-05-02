@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remotes>
+	<remote serial="0013A2004151454C">
+		<name>Remote 1</name>
+		<color>0xFF0000</color>
+		<cursor>circle</cursor>
+	</remote>
+
+	<remote serial="123133">
+		<name>Remote 2</name>
+		<color>0x00FF00</color>
+		<cursor>square</cursor>
+	</remote>
+</remotes>
