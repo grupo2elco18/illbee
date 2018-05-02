@@ -2,6 +2,7 @@ import serial
 import serial.threaded
 import _thread as thread
 import time
+import math
 
 class ZigBeeReader(serial.threaded.LineReader):
 	def __init__(self, handler):
@@ -31,9 +32,10 @@ class ZigBeeReader(serial.threaded.LineReader):
 			protocol.setCB(self._newline)
 			while self.on:
 				time.sleep(1)
-				print(self.p, self.q)
+				print(self.p, self.p-self.q)
 
 	def _newline(self, line):
+		#print(line)
 		self.p = self.p + 1
 		serial = self._serial(line)
 		if serial is None:
@@ -88,7 +90,10 @@ class ZigBeeReader(serial.threaded.LineReader):
 		px = numbers[::2]
 		py = numbers[1::2]
 		for x,y in zip(px,py):
-			points.append(Point([x,y]))
+			if x == 1023 or y == 1023:
+				points.append(None)
+			else:
+				points.append(Point([1-x/1024,y/760]))
 		return points
 
 
@@ -97,6 +102,28 @@ class Point(object):
 		super(Point, self).__init__()
 		self.x = pos[0]
 		self.y = pos[1]
+
+	def getPos(self):
+		return [self.x, self.y]
+
+	def midPoint(self, point):
+		mx = self.x + point.x
+		my = self.y + point.y
+		return Point([mx/2, my/2])
+
+	def dist(self, point):
+		dx = self.x - point.x
+		dy = self.y - point.y
+		return math.sqrt(dx*dx + dy*dy)
+
+	def diff(self, point):
+		dx = self.x - point.x
+		dy = self.y - point.y
+		return Point([dx, dy])
+
+	def __str__(self):
+		return "<Point: " + str(self.x) + ", " + str(self.y) + ">"
+
 
 
 class ReadLines(serial.threaded.LineReader):
