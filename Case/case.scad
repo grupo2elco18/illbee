@@ -86,9 +86,49 @@ if(part == 0){
 
 	back_support(back_support_len);
 
-}
+}else if(part == 1){
 
-if(part == 1){
+	translate([0, 0, ext_dia/2]) rotate([180, 0, 0]) {
+		%translate([wall_thickness, 0, 0]) {
+			electronics();
+		}
+
+		intersection() {
+			case(case_length, cone_pos);
+
+			translate([-1, -max_dia/2-1, 0]){
+				cube(size=[case_length+2, max_dia+2, max_dia]);
+			}
+		}
+
+		intersection(){
+			union() {
+				translate([chr_pcb_length, 0, 0]) {
+					support_pcb(pcb_length*0.7);
+				}
+
+				back_support(back_support_len);
+			}
+
+			union() {
+				translate([-1, -max_dia/2-1, 0]){
+					cube(size=[case_length+2, max_dia+2, max_dia]);
+				}
+
+				translate([-1, -pcb_width/2, pcb_thickness+ec_z_offset-0.1]){
+					cube(size=[case_length+2, pcb_width, max_dia]);
+				}
+			}
+
+		}
+	}
+
+
+
+
+
+
+}else if(part == 2){
 
 	translate([0, 0, ext_dia/2]) {
 
@@ -145,7 +185,7 @@ module back_support(length){
 module back_cover() {
 	difference() {
 		rotate([0, 90, 0]) rotate([0, 0, 360/12]) {
-			hexagon(ext_dia, wall_thickness);
+			hexagon(ext_dia, wall_thickness, t=wall_thickness);
 		}
 
 		translate([-1, -chr_hole_width/2, pcb_thickness]) {
