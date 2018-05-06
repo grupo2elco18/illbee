@@ -34,6 +34,8 @@ ec_z_offset = -5;
 
 wall_thickness = 2;
 
+back_support_len = 10;
+
 screw_dia = 4;
 screw_head_dia = 7;
 
@@ -82,6 +84,8 @@ if(part == 0){
 
 	back_cover();
 
+	back_support(back_support_len);
+
 }
 
 if(part == 1){
@@ -95,27 +99,48 @@ if(part == 1){
 		difference() {
 			union() {
 				case(case_length, cone_pos);
-				back_cover();
+
+				difference() {
+					union() {
+						translate([chr_pcb_length, 0, 0]) {
+							support_pcb(pcb_length*0.7);
+						}
+
+						back_support(back_support_len);
+					}
+
+
+					translate([-1, -pcb_width/2, pcb_thickness+ec_z_offset-0.1]){
+						cube(size=[case_length+2, pcb_width, max_dia]);
+					}
+				}
 			}
 			translate([-1, -max_dia/2-1, 0]){
 				cube(size=[case_length+2, max_dia+2, max_dia]);
 			}
 		}
 
-		difference() {
-			translate([chr_pcb_length, 0, 0]) {
-				support_pcb(pcb_length*0.7);
-			}
-			translate([-1, -max_dia/2-1, pcb_thickness+ec_z_offset-0.1]){
-				cube(size=[case_length+2, max_dia+2, max_dia]);
-			}
-		}
+		back_cover();
 		support_cam();
 	}
 
 }
 
+
+
 /******************************************************************************/
+
+module back_support(length){
+	intersection() {
+		translate([length/2+wall_thickness, 0]) difference() {
+			cube(size=[length, max_dia, max_dia], center=true);
+			cube(size=[length+1, pcb_width-2*pcb_support, max_dia+1], center=true);
+		}
+		rotate([0, 90, 0]) rotate([0, 0, 360/12]) {
+			hexagon(ext_dia, length);
+		}
+	}
+}
 
 module back_cover() {
 	difference() {
@@ -159,7 +184,7 @@ module support_pcb(length) {
 	translate([length/2 + wall_thickness, 0, 0]) {
 		intersection() {
 			difference() {
-				cube(size=[length, ext_dia+1, ext_dia+1], center=true);
+				cube(size=[length, max_dia+1, max_dia+1], center=true);
 				translate([0, 0, ec_z_offset+pcb_thickness/2]) {
 					cube(size=[length+1, pcb_width, pcb_thickness], center=true);
 				}
