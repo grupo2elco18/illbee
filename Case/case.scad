@@ -36,12 +36,15 @@ wall_thickness = 2;
 
 back_support_len = 10;
 
-screw_dia = 4;
-screw_head_dia = 7;
+button_pos = 98.5;
+button_dia = 11;
+
+led_pos = 55.2;
+led_dia = 5.2;
 
 /*****************************************************************************/
 
-part = 2;
+part = 1;
 /*
 FULL = 0
 TOP = 1
@@ -239,7 +242,22 @@ module support_pcb(length) {
 	}
 }
 
+
 module case(length, cone){
+	difference() {
+		case_flat(length, cone);
+
+		translate([button_pos, 0, 0]) {
+			cylinder(d=button_dia, h=max_dia);
+		}
+
+		translate([led_pos, 0, 0]) {
+			cylinder(d=led_dia, h=max_dia);
+		}
+	}
+}
+
+module case_flat(length, cone){
 	rotate([0, 90, 0]) rotate([0, 0, 360/12]) {
 		hexagon_hollow(ext_dia, cone, wall_thickness);
 		translate([0, 0, cone]){
