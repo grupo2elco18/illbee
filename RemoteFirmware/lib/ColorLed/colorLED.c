@@ -1,6 +1,10 @@
 #include "colorLED.h"
 #include <Arduino.h>
 
+#if defined(LED_COMMON_ANODE) && defined(LED_COMMON_CATHODE)
+#warning "LED configured for common cathode and anode simultaneously"
+#endif
+
 void colorLED_begin(){
 	pinMode(LED_RED_PIN, OUTPUT);
 	pinMode(LED_GREEN_PIN, OUTPUT);
@@ -15,6 +19,13 @@ void colorLED_set(long color){
 }
 
 void colorLED_setByte(uint8_t r, uint8_t g, uint8_t b){
+
+#ifdef LED_COMMON_ANODE
+	r = 255-r;
+	g = 255-g;
+	b = 255-b;
+#endif
+
 	analogWrite(LED_RED_PIN, r);
 	analogWrite(LED_GREEN_PIN, g);
 	analogWrite(LED_BLUE_PIN, b);

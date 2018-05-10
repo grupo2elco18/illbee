@@ -3,6 +3,9 @@
 
 #include "stdint.h"
 
+//#define LED_COMMON_CATHODE
+#define LED_COMMON_ANODE
+
 #define LED_RED      0xFF0000
 #define LED_GREEN    0x00FF00
 #define LED_BLUE     0x0000FF
@@ -13,8 +16,8 @@
 #define LED_ORANGE   0xDF9400
 
 #define LED_RED_PIN 11
-#define LED_GREEN_PIN 9
-#define LED_BLUE_PIN 10
+#define LED_GREEN_PIN 10
+#define LED_BLUE_PIN 9
 
 void colorLED_begin();
 void colorLED_set(long color);

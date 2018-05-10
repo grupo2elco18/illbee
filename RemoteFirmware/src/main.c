@@ -10,7 +10,9 @@ extern void Error_Handler();
 void setup() {
 
 	colorLED_begin();
+
 	colorLED_set(LED_BLUE);
+
 
 	irCam_init();
 

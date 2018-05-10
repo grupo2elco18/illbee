@@ -94,8 +94,12 @@ int xbee_init(){
 int xbee_wait_connect(uint16_t timeout){
 	// TODO return error info
 	// TODO sometimes at ai returns 0 even if no pan exist
+	int status = xbee_sendAtForOk("NR");
+	if(status != XBEE_SUCCESS){
+		return status;
+	}
+
 	unsigned long end = millis() + timeout;
-	int status;
 	while(millis() < end){
 		status = xbee_getAssociation();
 		if(status == 0) return XBEE_ASSOCIATION_SUCCESS;
