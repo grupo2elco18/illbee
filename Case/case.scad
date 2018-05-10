@@ -40,7 +40,7 @@ button_pos = 98.5;
 button_dia = 11;
 
 led_pos = 55.2;
-led_dia = 5.2;
+led_dia = 5.5;
 
 /*****************************************************************************/
 
@@ -252,7 +252,7 @@ module case(length, cone){
 		}
 
 		translate([led_pos, 0, 0]) {
-			cylinder(d=led_dia, h=max_dia);
+			cylinder(d=led_dia, h=max_dia, $fn=20);
 		}
 	}
 }
