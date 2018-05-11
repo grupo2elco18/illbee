@@ -5,7 +5,13 @@
 #include <irCam.h>
 #include <stdlib.h>
 
+#define BUTTON_PIN 2
+#define DEBOUNCE_TIME 50
+
 extern void Error_Handler();
+static void button_isr();
+
+volatile uint8_t button;
 
 void setup() {
 
@@ -31,12 +37,22 @@ void setup() {
 	}
 
 	colorLED_set(LED_GREEN);
+
+	pinMode(BUTTON_PIN, INPUT_PULLUP);
+	attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), button_isr, FALLING);
 }
 
 void loop() {
 
 	uint16_t points[8];
 	irCam_read(points);
+
+	if(button){
+		button = 0;
+		if(xbee_send("button") <= 0){
+			Error_Handler();
+		}
+	}
 
 	char buffer[50];
 	sprintf(buffer, "%d, %d, %d, %d, %d, %d, %d, %d",
@@ -61,4 +77,14 @@ void Error_Handler(){
 		colorLED_off();
 		delay(500);
 	}
+}
+
+static void button_isr(){
+	static unsigned long last = 0;
+	unsigned long now = millis();
+	if(now < last + DEBOUNCE_TIME) return;
+
+	last = now;
+
+	button = 1;
 }
