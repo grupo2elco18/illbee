@@ -5,6 +5,8 @@
 #include <irCam.h>
 #include <stdlib.h>
 
+#define LED_COLOR LED_GREEN
+
 #define BUTTON_PIN 2
 #define DEBOUNCE_TIME 50
 
@@ -36,7 +38,7 @@ void setup() {
 		Error_Handler();
 	}
 
-	colorLED_set(LED_GREEN);
+	colorLED_set(LED_COLOR);
 
 	pinMode(BUTTON_PIN, INPUT_PULLUP);
 	attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), button_isr, FALLING);
@@ -60,11 +62,9 @@ void loop() {
 		points[4], points[5], points[6], points[7]
 	);
 
-	colorLED_set(LED_CYAN);
 	if(xbee_send(buffer) <= 0){
 		Error_Handler();
 	}
-	colorLED_set(LED_GREEN);
 	delay(20);
 }
 
