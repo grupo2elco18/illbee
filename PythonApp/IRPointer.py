@@ -1,5 +1,5 @@
 import Pointer
-from ZigBeeReader import Point
+from Point import Point
 
 class IRPointer(Pointer.Pointer):
 

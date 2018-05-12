@@ -24,27 +24,26 @@ class ZigBeeReader(object):
 
 	def recv_data(self, data):
 
-		serial = bytes2int(data["source_addr_long"])
+		serial = bytes2hex(data["source_addr_long"])
 		data = data["rf_data"].decode("utf-8")
-		
+
 		if serial not in self.data:
 			self.data[serial] = ""
 
 		for c in data:
 			if c == '\r':
-				self.handler.data(serial, self.data[serial])
+				line = self.data[serial]
 				self.data[serial] = ""
+				self.handler.data(serial, line)
 			else:
 				self.data[serial] += c
 
 
-def bytes2int(bytes):
-	d = 0;
-	blen = len(bytes)
-	for i in range(blen):
-		d += bytes[i] << ((blen-i-1)*8)
-
-	return d
+def bytes2hex(bytes):
+	h = "";
+	for b in bytes:
+		h += "{0:02X}".format(b)
+	return h
 
 
 
