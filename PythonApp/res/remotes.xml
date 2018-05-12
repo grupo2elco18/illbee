@@ -2,7 +2,7 @@
 <remotes>
 	<remote serial="0013A2004151454C">
 		<name>Remote 1</name>
-		<color>0xFF0000</color>
+		<color>0x0000FF</color>
 		<cursor>circle</cursor>
 	</remote>
 
