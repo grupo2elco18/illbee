@@ -14,7 +14,7 @@ static int recvOK();
 static int checkOK(const char* recv);
 static int recvData(char* recv, size_t recv_len);
 static int sendCTS(const char* str);
-//static int sendBuffer(const char* str);
+static int sendBuffer(const char* str);
 
 static int startConf(){
 	Serial.write("+++");
@@ -143,7 +143,7 @@ int xbee_send(const char* str){
 	}
 	int len = 0;
 	int status = 0;
-#ifndef SYMBOL
+#ifdef XBEE_SEND_SERIAL
 	status = sendCTS(sn);
 	if(status < 0) return status;
 	len += status;
@@ -174,26 +174,12 @@ int xbee_changeBR(){
 	return XBEE_SUCCESS;
 }
 
-static int sendCTS(const char* str){
-	unsigned long to = millis() + XBEE_TO_TIME;
-	int i;
-	for(i = 0; str[i] != '\0'; ++i){
-		digitalWrite(13, HIGH);
-		while(digitalRead(XBEE_CTS_PIN) == HIGH){
-			if(millis() > to) return XBEE_TO_ERR;
-		}
-		digitalWrite(13, LOW);
-		Serial.write(str[i]);
-		Serial.flush();
-	}
-	return i;
-}
 
-/*
 static int sendCTS(const char* str){
 	unsigned long to = millis() + XBEE_TO_TIME;
 
 	for(uint16_t i = 0;; i += CTS_BUFFER_LEFT){
+		Serial.flush();
 		while(digitalRead(XBEE_CTS_PIN)){
 			if(millis() > to) return XBEE_TO_ERR;
 		}
@@ -210,4 +196,3 @@ static int sendBuffer(const char* str){
 	}
 	return CTS_BUFFER_LEFT;
 }
-*/

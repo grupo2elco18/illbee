@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-#define XBEE_SEND_SERIAL
+//#define XBEE_SEND_SERIAL
 
 #define XBEE_CTS_PIN A3
 
