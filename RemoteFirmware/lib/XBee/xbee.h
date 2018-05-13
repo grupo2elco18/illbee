@@ -9,6 +9,10 @@
 extern "C" {
 #endif
 
+#define XBEE_SEND_SERIAL
+
+#define XBEE_CTS_PIN A3
+
 #define XBEE_SUCCESS 0
 #define XBEE_ERROR -1
 #define XBEE_TO_ERR -2

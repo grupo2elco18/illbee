@@ -2,6 +2,8 @@
 #include <Arduino.h>
 #include <string.h>
 
+#define CTS_BUFFER_LEFT 16
+
 static int conf = 0;
 static const char* str_OK = "OK";
 static const char* sn;
@@ -11,6 +13,8 @@ static int endConf();
 static int recvOK();
 static int checkOK(const char* recv);
 static int recvData(char* recv, size_t recv_len);
+static int sendCTS(const char* str);
+//static int sendBuffer(const char* str);
 
 static int startConf(){
 	Serial.write("+++");
@@ -85,6 +89,7 @@ static int checkPAN(){
 
 int xbee_init(){
 	Serial.begin(9600); // TODO increase baud rate
+	pinMode(XBEE_CTS_PIN, INPUT);
 	int status = xbee_getSN();
 	if(status != XBEE_SUCCESS) return status;
 	sn = xbee_getSN_pchar();
@@ -93,7 +98,6 @@ int xbee_init(){
 
 int xbee_wait_connect(uint16_t timeout){
 	// TODO return error info
-	// TODO sometimes at ai returns 0 even if no pan exist
 	int status = xbee_sendAtForOk("NR");
 	if(status != XBEE_SUCCESS){
 		return status;
@@ -138,10 +142,21 @@ int xbee_send(const char* str){
 		if(status != XBEE_SUCCESS) return status;
 	}
 	int len = 0;
-	len += Serial.write(sn);
-	len += Serial.write(" {");
-	len += Serial.write(str);
-	len += Serial.write("}\r");
+	int status = 0;
+#ifndef SYMBOL
+	status = sendCTS(sn);
+	if(status < 0) return status;
+	len += status;
+#endif
+	status = sendCTS(" {");
+	if(status < 0) return status;
+	len += status;
+	status = sendCTS(str);
+	if(status < 0) return status;
+	len += status;
+	status = sendCTS("}\r");
+	if(status < 0) return status;
+	len += status;
 	return len;
 
 }
@@ -158,3 +173,41 @@ int xbee_changeBR(){
 	Serial.begin(115200);
 	return XBEE_SUCCESS;
 }
+
+static int sendCTS(const char* str){
+	unsigned long to = millis() + XBEE_TO_TIME;
+	int i;
+	for(i = 0; str[i] != '\0'; ++i){
+		digitalWrite(13, HIGH);
+		while(digitalRead(XBEE_CTS_PIN) == HIGH){
+			if(millis() > to) return XBEE_TO_ERR;
+		}
+		digitalWrite(13, LOW);
+		Serial.write(str[i]);
+		Serial.flush();
+	}
+	return i;
+}
+
+/*
+static int sendCTS(const char* str){
+	unsigned long to = millis() + XBEE_TO_TIME;
+
+	for(uint16_t i = 0;; i += CTS_BUFFER_LEFT){
+		while(digitalRead(XBEE_CTS_PIN)){
+			if(millis() > to) return XBEE_TO_ERR;
+		}
+		uint16_t len = sendBuffer(str + i);
+		if(len != 16) return i + len;
+	}
+}
+
+static int sendBuffer(const char* str){
+	for(uint8_t i = 0; i < CTS_BUFFER_LEFT; ++i){
+		char c = str[i];
+		if(c == '\0') return i;
+		Serial.write(c);
+	}
+	return CTS_BUFFER_LEFT;
+}
+*/
