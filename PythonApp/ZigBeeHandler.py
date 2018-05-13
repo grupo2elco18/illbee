@@ -15,6 +15,7 @@ class ZigBeeHandler(object):
 
 
 	def data(self, serial, data):
+		#print(data)
 
 		remote = None
 		if serial not in self.remotes:
@@ -26,6 +27,7 @@ class ZigBeeHandler(object):
 			remote = self.remotes[serial]
 
 		line = self._checkLine(data)
+
 		if line is None:
 			return
 		elif line == "button":
@@ -82,9 +84,11 @@ class ZigBeeHandler(object):
 
 		for r in self.xml_remotes:
 			if 	r.attrib["serial"] == serial:
-				name = r.find("name").text
-				color = r.find("color").text
-				pointer = IRPointer.IRPointer(serial, color)
+				params = {}
+				params["name"] = r.find("name").text
+				params["color"] = r.find("color").text
+				params["cursor"] = r.find("cursor").text
+				pointer = IRPointer.IRPointer(serial, params)
 				self.canvas.addPointer(pointer)
 				return pointer
 

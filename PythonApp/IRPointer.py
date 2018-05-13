@@ -3,10 +3,10 @@ from Point import Point
 
 class IRPointer(Pointer.Pointer):
 
-	def __init__(self, remote_id, color):
+	def __init__(self, remote_id, params):
 		super(IRPointer, self).__init__()
 		self.remote_id = remote_id
-		self.color = color
+		self.params = params
 		self.offX = 5
 		self.offY = 5
 
@@ -37,7 +37,11 @@ class IRPointer(Pointer.Pointer):
 		self._update(up.getPos())
 
 	def _draw(self):
-		return self.canvas.create_oval([0, 0], [10, 10], fill='orange')
+		color = self.params["color"]
+		if self.params["cursor"] == "circle":
+			return self.canvas.create_oval([0, 0], [10, 10], fill=color)
+		elif self.params["cursor"] == "square":
+			return self.canvas.create_rectangle([0, 0], [10, 10], fill=color)
 
 
 def main():
