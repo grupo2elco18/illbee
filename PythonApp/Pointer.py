@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from Event import Event
 
 class Pointer(object):
 
-	def __init__(self):
+	def __init__(self, params):
 		super(Pointer, self).__init__()
 		self.canvas = None
 		self.poxX = 0
@@ -10,21 +11,19 @@ class Pointer(object):
 		self.offX = 0
 		self.offY = 0
 		self.moved = False
-		self.onClickCB = None
-		self.id = None
+		self.params = params
 
-	def setClickCb(self, cb):
-		self.onClickCB = cb
+	def getParams(self):
+		return self.params
 
-	def onClick(self, event=None):
+	def onClick(self):
 		if(self.canvas == None):
 			return
-
-		if(self.onClickCB == None):
-			print("clicked at", self.posX, self.posY)
-			return
-
-		self.onClickCB(event, self)
+		event = Event()
+		event.x = self.posX
+		event.y = self.posY
+		event.source = self
+		self.canvas.onClick(event)
 
 
 	def _update(self, pos):

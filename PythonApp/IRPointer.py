@@ -4,9 +4,8 @@ from Point import Point
 class IRPointer(Pointer.Pointer):
 
 	def __init__(self, remote_id, params):
-		super(IRPointer, self).__init__()
+		super(IRPointer, self).__init__(params)
 		self.remote_id = remote_id
-		self.params = params
 		self.offX = 5
 		self.offY = 5
 
@@ -37,11 +36,15 @@ class IRPointer(Pointer.Pointer):
 		self._update(up.getPos())
 
 	def _draw(self):
+		print(self.params)
 		color = self.params["color"]
 		if self.params["cursor"] == "circle":
 			return self.canvas.create_oval([0, 0], [10, 10], fill=color)
 		elif self.params["cursor"] == "square":
 			return self.canvas.create_rectangle([0, 0], [10, 10], fill=color)
+
+	def getID(self):
+		return self.remote_id
 
 
 def main():
@@ -51,11 +54,17 @@ def main():
 	import ZigBeeHandler
 	import _thread as thread
 
+	def onClick(event):
+		src = event.source.getParams()["name"]
+		print("Click from:", src, event.x, event.y)
+
 
 	root = Tk.Tk()
 	root.title("IRPointer Test")
 	canvas = PointCanvas.PointCanvas(master=root, width=1024, height=1024, bg='lightblue')
 	canvas.pack()
+
+	canvas.addClickCB(onClick)
 
 	handler = ZigBeeHandler.ZigBeeHandler(canvas)
 

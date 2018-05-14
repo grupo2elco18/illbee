@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#!/# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import tkinter as Tk
 
 
@@ -8,6 +8,7 @@ class PointCanvas(Tk.Canvas):
 		super(PointCanvas, self).__init__(**kwargs)
 		self.pointers = []
 		self._update()
+		self.clickCB = []
 
 	def addPointer(self, pointer):
 		self.pointers.append(pointer)
@@ -18,6 +19,14 @@ class PointCanvas(Tk.Canvas):
 			p.move()
 
 		self.after(20, self._update)
+
+	def addClickCB(self, cb):
+		self.clickCB.append(cb)
+
+	def onClick(self, event):
+		for cb in self.clickCB:
+			cb(event)
+
 
 def main():
 	import tkinter as Tk

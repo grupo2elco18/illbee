@@ -85,6 +85,7 @@ class ZigBeeHandler(object):
 		for r in self.xml_remotes:
 			if 	r.attrib["serial"] == serial:
 				params = {}
+				params["serial"] = serial
 				params["name"] = r.find("name").text
 				params["color"] = r.find("color").text
 				params["cursor"] = r.find("cursor").text
