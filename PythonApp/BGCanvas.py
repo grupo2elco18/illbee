@@ -28,6 +28,7 @@ class BGCanvas(Tk.Canvas):
 		self.image = ImageTk.PhotoImage(resized)
 		self.delete(self.bg)
 		self.bg = self.create_image(0, 0, image=self.image, anchor=Tk.NW)
+		self.tag_lower(self.bg)
 
 
 

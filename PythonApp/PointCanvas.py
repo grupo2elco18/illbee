@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import tkinter as Tk
+from BGCanvas import BGCanvas
 
 
-class PointCanvas(Tk.Canvas):
+class PointCanvas(BGCanvas):
 	def __init__(self, **kwargs):
 		super(PointCanvas, self).__init__(**kwargs)
 		self.pointers = []

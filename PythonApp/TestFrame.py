@@ -4,7 +4,7 @@ import tkinter as Tk
 from PointCanvas import PointCanvas
 
 class TestFrame(Tk.Frame):
-	"""docstring for TestFrame."""
+
 	def __init__(self, root):
 		super(TestFrame, self).__init__(root)
 		self.createWidgets()
@@ -23,6 +23,13 @@ class TestFrame(Tk.Frame):
 		self.canvas = PointCanvas(master=self, bg='lightblue')
 		self.canvas.grid(row=1, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 
+	def setImage(self, image):
+		self.canvas.setBG(image)
+
+	def getPointCanvas(self):
+		return self.canvas
+
+
 
 
 def main():
@@ -31,6 +38,8 @@ def main():
 	root.columnconfigure(0, weight=1)
 	app = TestFrame(root)
 	app.grid(sticky=Tk.N+Tk.S+Tk.E+Tk.W)
+
+	app.setImage(image)
 	root.mainloop()
 
 if __name__ == "__main__":

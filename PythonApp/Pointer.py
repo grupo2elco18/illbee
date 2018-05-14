@@ -34,7 +34,7 @@ class Pointer(object):
 	def move(self):
 		if(self.canvas == None):
 			return
-		if(self.id == None):
+		if(self.params == None):
 			return
 		if(not self.moved):
 			return
