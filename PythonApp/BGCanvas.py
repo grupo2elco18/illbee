@@ -15,7 +15,15 @@ class BGCanvas(Tk.Canvas):
 		self.tag_lower(self.bg)
 
 	def _bg_resize(self, event):
-		size = (event.width, event.height)
+		width, height = self.original.size
+		vscale = event.width/width;
+		hscale = event.height/height;
+
+		scale = vscale;
+		if hscale < vscale:
+			scale = hscale
+
+		size = (int(width*scale), int(height*scale))
 		resized = self.original.resize(size,Image.ANTIALIAS)
 		self.image = ImageTk.PhotoImage(resized)
 		self.delete(self.bg)
