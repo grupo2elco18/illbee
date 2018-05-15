@@ -7,9 +7,18 @@ from ZigBeeReader import ZigBeeReader
 from ZigBeeHandler import ZigBeeHandler
 from TestLogic import TestLogic
 from TestLoader import TestLoader
+import sys
+
 
 
 def main():
+	if len(sys.argv) != 3:
+		print("Arguments Error")
+
+	# TODO: check if arguments are correct
+	serial = sys.argv[1]
+	test = sys.argv[2]
+
 	root = Tk.Tk()
 	root.title("ILLBEE Test") # TODO config file
 	root.rowconfigure(0, weight=1)
@@ -18,11 +27,11 @@ def main():
 	app.grid(sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 
 	handler = ZigBeeHandler(app.getPointCanvas())
-	reader = ZigBeeReader(handler)
+	reader = ZigBeeReader(handler, serial)
 	logic = TestLogic(app, handler.get_remotes)
 	loader = TestLoader(logic)
 
-	loader.load("tests/spain.xml")
+	loader.load(test)
 
 
 

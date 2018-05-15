@@ -4,10 +4,11 @@ import threading
 
 class ZigBeeReader(object):
 
-	def __init__(self, handler):
+	def __init__(self, handler, port):
 		super(ZigBeeReader, self).__init__()
 		self.handler = handler
-		self.ser = serial.Serial('/dev/ttyACM0', # TODO config
+		self.ser = serial.Serial(
+			port,
 			baudrate=115200,
 			bytesize=serial.EIGHTBITS,
 			parity=serial.PARITY_NONE,
