@@ -10,9 +10,20 @@ class ZigBeeHandler(object):
 		super(ZigBeeHandler, self).__init__()
 		self.canvas = canvas
 		self.remotes = {}
-		xml = ET.parse(remotes_file).getroot()
-		self.xml_remotes = xml.findall("remote")
+		self.xml_remotes = []
+		self.load()
 
+	def load(self):
+		xml = ET.parse(remotes_file).getroot()
+		for r in xml.findall("remote"):
+			params = {}
+			serial = r.attrib["serial"]
+			params["serial"] = serial
+			params["name"] = r.find("name").text
+			params["color"] = r.find("color").text
+			params["cursor"] = r.find("cursor").text
+			pointer = IRPointer.IRPointer(serial, params)
+			self.xml_remotes.append(pointer)
 
 	def data(self, serial, data):
 		#print(data)
@@ -83,18 +94,16 @@ class ZigBeeHandler(object):
 		print("New remote", serial)
 
 		for r in self.xml_remotes:
-			if 	r.attrib["serial"] == serial:
-				params = {}
-				params["serial"] = serial
-				params["name"] = r.find("name").text
-				params["color"] = r.find("color").text
-				params["cursor"] = r.find("cursor").text
-				pointer = IRPointer.IRPointer(serial, params)
-				self.canvas.addPointer(pointer)
-				return pointer
+			print(r.getID(), serial)
+			if 	r.getID() == serial:
+				self.canvas.addPointer(r)
+				return r
 
 		print("Unknown remote")
 		return None
+
+	def get_remotes(self):
+		return self.xml_remotes
 
 def main():
 	tree = ET.parse(remotes_file)

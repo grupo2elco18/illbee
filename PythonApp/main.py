@@ -19,7 +19,7 @@ def main():
 
 	handler = ZigBeeHandler(app.getPointCanvas())
 	reader = ZigBeeReader(handler)
-	logic = TestLogic(app)
+	logic = TestLogic(app, handler.get_remotes)
 	loader = TestLoader(logic)
 
 	loader.load("tests/spain.xml")

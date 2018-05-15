@@ -4,10 +4,11 @@ from PIL import Image
 
 class TestLogic(object):
 
-	def __init__(self, frame):
+	def __init__(self, frame, remotes):
 		super(TestLogic, self).__init__()
 		self.frame = frame
 		self.frame.getPointCanvas().addClickCB(self._onClick)
+		self.remotes = remotes
 		self.test = None
 		self.question = None
 
