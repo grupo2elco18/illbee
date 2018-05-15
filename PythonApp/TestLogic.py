@@ -18,7 +18,9 @@ class TestLogic(object):
 		self.remotes = {}
 		self.nAns = 0
 		for r in remotes:
-			self.remotes[r] = Score()
+			score = Score()
+			self.remotes[r] = score
+			self.frame.addUser(r.getParams()["name"], score)
 
 
 	def _onClick(self, event):
@@ -38,6 +40,8 @@ class TestLogic(object):
 		self.nAns += 1
 
 		self.printStatus()
+		name = event.source.getParams()["name"]
+		self.frame.updateUser(name)
 
 		if self.nAns == len(self.remotes):
 			self.waitNext()
@@ -68,6 +72,7 @@ class TestLogic(object):
 		image = Image.open(params["bg"])
 		self.solution = Image.open(params["answer"]).load()
 		self.frame.setImage(image)
+		self.frame.updateUsers()
 
 	def _checkSuccess(self, pos):
 		px = self.solution[pos[0], pos[1]]

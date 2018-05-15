@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 import tkinter as Tk
 from PointCanvas import PointCanvas
+from TestLogic import WAITING, SUCCESS, FAIL
 
 class TestFrame(Tk.Frame):
 
 	def __init__(self, root):
 		super(TestFrame, self).__init__(root)
+		self.users = {}
+		self.labels = {}
 		self.createWidgets()
 
 	def createWidgets(self):
@@ -17,11 +20,36 @@ class TestFrame(Tk.Frame):
 
 		self.label = Tk.Label(self, text="", font=(None, 30), bg='lightblue')
 		self.label.grid(row=0, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
-		self.button2 = Tk.Button(self, text="button", bg='lightblue')
-		self.button2.grid(row=0, column=1, rowspan=2, sticky=Tk.N+Tk.S+Tk.E+Tk.W);
+
+		self.score = Tk.Frame(self, bg='lightblue')
+		self.score.grid(row=0, column=1, rowspan=2, sticky=Tk.N+Tk.S+Tk.E+Tk.W);
+
 
 		self.canvas = PointCanvas(master=self, bg='lightblue')
 		self.canvas.grid(row=1, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
+
+	def addUser(self, name, score):
+		self.users[name] = score
+		label = Tk.Label(self.score, bg='lightblue', font=(None, 15))
+		self.labels[name] = label
+		self.updateUser(name)
+		label.pack()
+
+
+	def updateUsers(self):
+		for u in self.users:
+			self.updateUser(u)
+
+	def updateUser(self, name):
+		label = self.labels[name]
+		score = self.users[name]
+		label["text"] = str(score.score) + "\t" + name
+		if score.result == WAITING:
+			label["fg"] = "black"
+		elif score.result == FAIL:
+			label["fg"] = "red"
+		elif score.result == SUCCESS:
+			label["fg"] = "green"
 
 	def setImage(self, image):
 		self.canvas.setBG(image)
