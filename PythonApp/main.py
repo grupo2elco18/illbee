@@ -5,6 +5,8 @@ from PIL import Image
 from TestFrame import TestFrame
 from ZigBeeReader import ZigBeeReader
 from ZigBeeHandler import ZigBeeHandler
+from TestLogic import TestLogic
+from TestLoader import TestLoader
 
 
 def main():
@@ -15,11 +17,14 @@ def main():
 	app = TestFrame(root)
 	app.grid(sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 
-	image = Image.open("tests/res/spain.png")
-	app.setImage(image)
-
 	handler = ZigBeeHandler(app.getPointCanvas())
 	reader = ZigBeeReader(handler)
+	logic = TestLogic(app)
+	loader = TestLoader(logic)
+
+	loader.load("tests/spain.xml")
+
+
 
 	reader.start()
 

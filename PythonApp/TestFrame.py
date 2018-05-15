@@ -15,7 +15,7 @@ class TestFrame(Tk.Frame):
 		self.rowconfigure(1, weight=1)
 		self.columnconfigure(1, weight=1)
 
-		self.label = Tk.Label(self, text="pregunta1", font=(None, 30), bg='lightblue')
+		self.label = Tk.Label(self, text="", font=(None, 30), bg='lightblue')
 		self.label.grid(row=0, column=0, sticky=Tk.N+Tk.S+Tk.E+Tk.W)
 		self.button2 = Tk.Button(self, text="button", bg='lightblue')
 		self.button2.grid(row=0, column=1, rowspan=2, sticky=Tk.N+Tk.S+Tk.E+Tk.W);
@@ -28,6 +28,9 @@ class TestFrame(Tk.Frame):
 
 	def getPointCanvas(self):
 		return self.canvas
+
+	def setText(self, text):
+		self.label["text"] = text
 
 
 

@@ -8,17 +8,23 @@
 		<type>map</type>
 		<bg>tests/res/spain.png</bg>
 		<answer>tests/res/spain_madrid.png</answer>
+		<success>2</success>
+		<fail>-1</fail>
 	</question>
 	<question>
 		<title>¿Cuál es la provincia de Toledo?</title>
 		<type>map</type>
 		<bg>tests/res/spain.png</bg>
 		<answer>tests/res/spain_toledo.png</answer>
+		<success>2</success>
+		<fail>-1</fail>
 	</question>
 	<question>
 		<title>¿Dónde se encuentra Galicia?</title>
 		<type>map</type>
 		<bg>tests/res/spain.png</bg>
 		<answer>tests/res/spain_galicia.png</answer>
+		<success>2</success>
+		<fail>-1</fail>
 	</question>
 </test>
