@@ -51,8 +51,10 @@ void loop() {
 
 	if(button){
 		button = 0;
-		if(xbee_send("button") <= 0){
-			Error_Handler();
+		if(!digitalRead(BUTTON_PIN)){
+			if(xbee_send("button") <= 0){
+				Error_Handler();
+			}
 		}
 	}
 
