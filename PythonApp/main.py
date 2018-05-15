@@ -28,7 +28,7 @@ def main():
 
 	handler = ZigBeeHandler(app.getPointCanvas())
 	reader = ZigBeeReader(handler, serial)
-	logic = TestLogic(app, handler.get_remotes)
+	logic = TestLogic(app, handler.get_remotes())
 	loader = TestLoader(logic)
 
 	loader.load(test)
