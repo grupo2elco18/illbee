@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from PIL import Image
-import time
+from DelayedRun import DelayedRun
 
 WAITING = 0
 SUCCESS = 1
@@ -40,8 +40,12 @@ class TestLogic(object):
 		self.printStatus()
 
 		if self.nAns == len(self.remotes):
-			time.sleep(5)
-			self.next()
+			self.waitNext()
+
+	def waitNext(self):
+		self.frame.setText("Siguiente pregunta:...")
+		task = DelayedRun(self.next, 5)
+		task.start()
 
 	def start(self, test):
 		self.test = test
