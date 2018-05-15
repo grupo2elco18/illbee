@@ -15,7 +15,9 @@ class TestLogic(object):
 
 	def _onClick(self, event):
 		print(event)
-		self.next()
+		pos = self.frame.getPointCanvas().getImagePos(event)
+		self._checkSuccess(pos)
+		#self.next()
 
 	def start(self, test):
 		self.test = test
@@ -35,4 +37,8 @@ class TestLogic(object):
 		self.frame.setText(self.question.title)
 		params = self.question.params
 		image = Image.open(params["bg"])
+		self.solution = Image.open(params["answer"]).load()
 		self.frame.setImage(image)
+
+	def _checkSuccess(self, pos):
+		print(self.solution[pos[0], pos[1]])

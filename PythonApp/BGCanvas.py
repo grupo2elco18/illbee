@@ -35,14 +35,30 @@ class BGCanvas(Tk.Canvas):
 		if hscale < vscale:
 			scale = hscale
 
-		size = (math.ceil(width*scale), math.ceil(height*scale+0.5))
+		self.size = (math.ceil(width*scale), math.ceil(height*scale+0.5))
 
-		resized = self.original.resize(size,Image.ANTIALIAS)
+		resized = self.original.resize(self.size,Image.ANTIALIAS)
 		self.image = ImageTk.PhotoImage(resized)
 		if self.bg is not None:
 			self.delete(self.bg)
 		self.bg = self.create_image(0, 0, image=self.image, anchor=Tk.NW)
 		self.tag_lower(self.bg)
+
+	def getImagePos(self, event):
+		sizeX = self.winfo_width()
+		sizeY = self.winfo_height()
+		relImageX = self.size[0]/sizeX
+		relImageY = self.size[0]/sizeY
+
+		relCursorX = event.x/relImageX
+		relCursorY = event.y/relImageY
+
+		if relCursorX > 1 or relCursorX > 1:
+			return None
+
+		width, height = self.original.size
+
+		return [relCursorX*width, relCursorY*height]
 
 
 

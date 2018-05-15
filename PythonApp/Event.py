@@ -6,3 +6,5 @@ class Event(object):
 		self.source = None
 		self.x = None
 		self.y = None
+
+# TODO: inherit from point
