@@ -94,7 +94,6 @@ class ZigBeeHandler(object):
 		print("New remote", serial)
 
 		for r in self.xml_remotes:
-			print(r.getID(), serial)
 			if 	r.getID() == serial:
 				self.canvas.addPointer(r)
 				return r

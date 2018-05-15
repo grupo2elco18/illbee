@@ -48,14 +48,14 @@ class BGCanvas(Tk.Canvas):
 		sizeX = self.winfo_width()
 		sizeY = self.winfo_height()
 		relImageX = self.size[0]/sizeX
-		relImageY = self.size[0]/sizeY
+		relImageY = self.size[1]/sizeY
 
 		relCursorX = event.x/relImageX
 		relCursorY = event.y/relImageY
 
-		if relCursorX > 1 or relCursorX > 1:
+		if relCursorX > 1 or relCursorY > 1:
 			return None
-
+			
 		width, height = self.original.size
 
 		return [relCursorX*width, relCursorY*height]

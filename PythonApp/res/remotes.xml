@@ -8,7 +8,7 @@
 
 	<remote serial="0013A2004172BFC1">
 		<name>Remote 2</name>
-		<color>green</color>
+		<color>spring green</color>
 		<cursor>square</cursor>
 	</remote>
 </remotes>
