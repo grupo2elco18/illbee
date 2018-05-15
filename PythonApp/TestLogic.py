@@ -22,6 +22,11 @@ class TestLogic(object):
 
 	def next(self):
 		self.question = self.test.next()
+		if self.question is None:
+			self.frame.setText("END")
+			self.frame.setImage(None)
+			return
+
 		if self.question.qtype != "map":
 			print("Wrong type of question type")
 			return

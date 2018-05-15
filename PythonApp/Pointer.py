@@ -6,7 +6,7 @@ class Pointer(object):
 	def __init__(self, params):
 		super(Pointer, self).__init__()
 		self.canvas = None
-		self.poxX = 0
+		self.posX = 0
 		self.posY = 0
 		self.offX = 0
 		self.offY = 0

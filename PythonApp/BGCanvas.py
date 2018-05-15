@@ -2,31 +2,45 @@
 # -*- coding: utf-8 -*-
 import tkinter as Tk
 from PIL import Image, ImageTk
+import math
 
 class BGCanvas(Tk.Canvas):
 	def __init__(self, **kwargs):
 		super(BGCanvas, self).__init__(**kwargs)
+		self.bg = None
 		self.bind("<Configure>", self._bg_resize)
 
 	def setBG(self, image):
 		self.original = image
-		self.image = ImageTk.PhotoImage(self.original)
-		self.bg = self.create_image(0,0,image=self.image, anchor=Tk.NW)
-		self.tag_lower(self.bg)
+		if self.original is None:
+			if self.bg is not None:
+				self.delete(self.bg)
+			return
 
-	def _bg_resize(self, event):
+		self._bg_resize()
+
+	def _bg_resize(self, event=None):
+		if self.original is None:
+			return
+
 		width, height = self.original.size
-		vscale = event.width/width;
-		hscale = event.height/height;
+
+		sizeX = self.winfo_width()
+		sizeY = self.winfo_height()
+
+		vscale = sizeX/width;
+		hscale = sizeY/height;
 
 		scale = vscale;
 		if hscale < vscale:
 			scale = hscale
 
-		size = (int(width*scale), int(height*scale))
+		size = (math.ceil(width*scale), math.ceil(height*scale+0.5))
+
 		resized = self.original.resize(size,Image.ANTIALIAS)
 		self.image = ImageTk.PhotoImage(resized)
-		self.delete(self.bg)
+		if self.bg is not None:
+			self.delete(self.bg)
 		self.bg = self.create_image(0, 0, image=self.image, anchor=Tk.NW)
 		self.tag_lower(self.bg)
 
