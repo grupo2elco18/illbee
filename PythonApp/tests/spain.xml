@@ -9,6 +9,22 @@
 		<bg>tests/res/spain.png</bg>
 		<answer>tests/res/spain_madrid.png</answer>
 		<success>2</success>
+		<fail>-2</fail>
+	</question>
+	<question>
+		<title>¿Dónde están las Islas Baleares?</title>
+		<type>map</type>
+		<bg>tests/res/spain.png</bg>
+		<answer>tests/res/spain_baleares.png</answer>
+		<success>2</success>
+		<fail>-1</fail>
+	</question>
+	<question>
+		<title>¿Dónde se encuentra Galicia?</title>
+		<type>map</type>
+		<bg>tests/res/spain.png</bg>
+		<answer>tests/res/spain_galicia.png</answer>
+		<success>2</success>
 		<fail>-1</fail>
 	</question>
 	<question>
@@ -20,11 +36,27 @@
 		<fail>-1</fail>
 	</question>
 	<question>
-		<title>¿Dónde se encuentra Galicia?</title>
+		<title>¿Dónde está Murcia?</title>
 		<type>map</type>
 		<bg>tests/res/spain.png</bg>
-		<answer>tests/res/spain_galicia.png</answer>
-		<success>2</success>
+		<answer>tests/res/spain_murcia.png</answer>
+		<success>3</success>
+		<fail>-1</fail>
+	</question>
+	<question>
+		<title>¿Encuentra Badajoz?</title>
+		<type>map</type>
+		<bg>tests/res/spain.png</bg>
+		<answer>tests/res/spain_badajoz.png</answer>
+		<success>3</success>
+		<fail>-1</fail>
+	</question>
+	<question>
+		<title>¿Cuál es la provincia de Teruel?</title>
+		<type>map</type>
+		<bg>tests/res/spain.png</bg>
+		<answer>tests/res/spain_teruel.png</answer>
+		<success>3</success>
 		<fail>-1</fail>
 	</question>
 </test>
