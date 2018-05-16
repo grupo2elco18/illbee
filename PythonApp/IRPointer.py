@@ -1,4 +1,5 @@
 import Pointer
+import math
 from Point import Point
 
 class IRPointer(Pointer.Pointer):
@@ -16,24 +17,53 @@ class IRPointer(Pointer.Pointer):
 			return
 
 		mp = p1.midPoint(p2);
+		mp.y = 1-mp.y
 		dist = p1.diff(p2);
+		angle = p1.angle(p2);
 
 		# Point where the remote is pointing
-		fp = Point([0.5, 1])
+		fp = Point([0.5, 0.5])
+		mprel = mp.diff(fp)
+		mprel.rotate(angle)
+
 
 		# Screen size
-		screen = Point([0.5-abs(dist.x/2), 1-abs(dist.y/2)])
+		screen = Point([0.4, 0.4])
 
-		# Lower left screen corner in remote perspective
-		sp = Point([mp.x-screen.x, mp.y])
+		# Upper left screen corner in remote perspective
+		sp = Point([mprel.x-screen.x/2, mprel.y+screen.y])
 
 		# Where the cursor should be
-		up = fp.diff(sp)
-		up.x = up.x/(screen.x*2) # Normalize screen y dimension
+		up = Point([-sp.x, -sp.y])
+		#print("up:",up)
+		# Normalize screen
+		up.x = up.x/(screen.x)
+		up.y = -up.y/(screen.y)
 
-		# TODO allow rotation: extract angle from ir points and
-		# rotate screen corner from mp
-		self._update(up.getPos())
+		# Smooth movement
+		sm = self.smooth(up)
+		#print(sm)
+
+		self._update(sm)
+
+	def smooth(self, new):
+		radius = 0.02
+
+		smX = self.posX
+		smY = self.posY
+
+		distX = new.x - self.posX
+		distY = new.y - self.posY
+
+		if abs(distX) > radius:
+			smX = new.x - math.copysign(radius, distX)
+		if abs(distY) > radius:
+			smY = new.y - math.copysign(radius, distY)
+
+		sm = [smX*0.9+new.x*0.1, smY*0.9+new.y*0.1,]
+
+		return sm
+
 
 	def _draw(self):
 		print(self.params)

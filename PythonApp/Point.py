@@ -1,3 +1,5 @@
+import math
+
 class Point(object):
 	def __init__(self, pos):
 		super(Point, self).__init__()
@@ -21,6 +23,16 @@ class Point(object):
 		dx = self.x - point.x
 		dy = self.y - point.y
 		return Point([dx, dy])
+
+	def angle(self, point):
+		diff = self.diff(point)
+		return math.atan(diff.y/diff.x)
+
+	def rotate(self, angle):
+		newX = self.x*math.cos(angle)-self.y*math.sin(angle)
+		newY = self.y*math.cos(angle)+self.x*math.sin(angle)
+		self.x = newX
+		self.y = newY
 
 	def __str__(self):
 		return "<Point: " + str(self.x) + ", " + str(self.y) + ">"
