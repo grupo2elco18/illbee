@@ -33,13 +33,13 @@
     "lfuse": "0xFF",
     "lock": "0x3F"
   },
-  "name": "Illud Remote",
+  "name": "IllBee Remote",
   "upload": {
     "maximum_ram_size": 2048,
     "maximum_size": 32256,
     "protocol": "usbtiny",
     "require_upload_port": false
   },
-  "url": "https://none",
-  "vendor": "Illud"
+  "url": "http://illbee.tk",
+  "vendor": "IllBee"
 }
