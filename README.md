@@ -1,5 +1,7 @@
 # I'llBee
 
+IllBee es un proyecto creado por las personas abajo mencionadas para la asignatura de Electrónica de Consumo del Grado en Tecnologías y Servicios de Telecomunicación de la Universidad Politécnica de Madrid.
+IllBee es un dispositivo que permite a los alumnos jugar y divertirse aprendiendo, focalizando su atención en el aprendizaje. Aquí se encuentran el diseño electrónico del mando, su carcasa y su software.
 
 ## Licencia
 ```
@@ -18,10 +20,6 @@ along with IllBee.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
 Todos los archivos deben contener una copia de esta nota. Por favor, considere que los archivos donde es difícil colocar esta nota (como imágenes) están distribuidas bajo los mismos términos.
-
-## Descripción del proyecto
-IllBee es un proyecto creado por las personas abajo mencionadas para la asignatura de Electrónica de Consumo del Grado en Tecnologías y Servicios de Telecomunicación de la Universidad Politécnica de Madrid.
-IllBee es un dispositivo que permite a los alumnos jugar y divertirse aprendiendo, focalizando su atención en el aprendizaje. Aquí se encuentran el diseño del mando, su carcasa y su software.
 
 ## Colaboradores
  - Juan José Alberca
